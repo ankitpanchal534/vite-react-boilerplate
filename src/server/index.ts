@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import userRoutes from './routes/userRoutes';
+import path from 'path';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,3 +16,5 @@ mongoose.connect('mongodb://localhost:27017/fullstack-app')
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+console.log(path.resolve(__dirname));
