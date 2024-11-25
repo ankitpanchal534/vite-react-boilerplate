@@ -8,254 +8,272 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
 // Import Routes
 
-import { Route as rootRoute } from './app/routes/__root'
-import { Route as PublicImport } from './app/routes/_public'
-import { Route as AdminImport } from './app/routes/_admin'
-import { Route as PublicSignUpImport } from './app/routes/_public/sign-up'
+import { Route as rootRoute } from "./app/routes/__root";
+import { Route as PublicImport } from "./app/routes/_public";
+import { Route as AdminImport } from "./app/routes/_admin";
+import { Route as PublicSignUpImport } from "./app/routes/_public/sign-up";
 
 // Create Virtual Routes
 
-const IndexLazyImport = createFileRoute('/')()
-const PublicLoginLazyImport = createFileRoute('/_public/login')()
-const AdminSettingsLazyImport = createFileRoute('/_admin/settings')()
-const AdminMyProfileLazyImport = createFileRoute('/_admin/my-profile')()
-const AdminHomeLazyImport = createFileRoute('/_admin/home')()
-const AdminAnalyticsLazyImport = createFileRoute('/_admin/analytics')()
-const AdminFormsIndexLazyImport = createFileRoute('/_admin/forms/')()
-const AdminDmIndexLazyImport = createFileRoute('/_admin/dm/')()
-const AdminDashboardIndexLazyImport = createFileRoute('/_admin/dashboard/')()
-const AdminCalendarIndexLazyImport = createFileRoute('/_admin/calendar/')()
-const AdminBookingsIndexLazyImport = createFileRoute('/_admin/bookings/')()
+const IndexLazyImport = createFileRoute("/")();
+const PublicLoginLazyImport = createFileRoute("/_public/login")();
+const AdminSettingsLazyImport = createFileRoute("/_admin/settings")();
+const AdminMyProfileLazyImport = createFileRoute("/_admin/my-profile")();
+const AdminHomeLazyImport = createFileRoute("/_admin/home")();
+const AdminHelloLazyImport = createFileRoute("/_admin/hello")();
+const AdminAnalyticsLazyImport = createFileRoute("/_admin/analytics")();
+const AdminFormsIndexLazyImport = createFileRoute("/_admin/forms/")();
+const AdminDmIndexLazyImport = createFileRoute("/_admin/dm/")();
+const AdminDashboardIndexLazyImport = createFileRoute("/_admin/dashboard/")();
+const AdminCalendarIndexLazyImport = createFileRoute("/_admin/calendar/")();
+const AdminBookingsIndexLazyImport = createFileRoute("/_admin/bookings/")();
 
 // Create/Update Routes
 
 const PublicRoute = PublicImport.update({
-  id: '/_public',
+  id: "/_public",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AdminRoute = AdminImport.update({
-  id: '/_admin',
+  id: "/_admin",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const IndexLazyRoute = IndexLazyImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./app/routes/index.lazy').then((d) => d.Route))
+} as any).lazy(() => import("./app/routes/index.lazy").then((d) => d.Route));
 
 const PublicLoginLazyRoute = PublicLoginLazyImport.update({
-  id: '/login',
-  path: '/login',
+  id: "/login",
+  path: "/login",
   getParentRoute: () => PublicRoute,
 } as any).lazy(() =>
-  import('./app/routes/_public/login.lazy').then((d) => d.Route),
-)
+  import("./app/routes/_public/login.lazy").then((d) => d.Route)
+);
 
 const AdminSettingsLazyRoute = AdminSettingsLazyImport.update({
-  id: '/settings',
-  path: '/settings',
+  id: "/settings",
+  path: "/settings",
   getParentRoute: () => AdminRoute,
 } as any).lazy(() =>
-  import('./app/routes/_admin/settings.lazy').then((d) => d.Route),
-)
+  import("./app/routes/_admin/settings.lazy").then((d) => d.Route)
+);
 
 const AdminMyProfileLazyRoute = AdminMyProfileLazyImport.update({
-  id: '/my-profile',
-  path: '/my-profile',
+  id: "/my-profile",
+  path: "/my-profile",
   getParentRoute: () => AdminRoute,
 } as any).lazy(() =>
-  import('./app/routes/_admin/my-profile.lazy').then((d) => d.Route),
-)
+  import("./app/routes/_admin/my-profile.lazy").then((d) => d.Route)
+);
 
 const AdminHomeLazyRoute = AdminHomeLazyImport.update({
-  id: '/home',
-  path: '/home',
+  id: "/home",
+  path: "/home",
   getParentRoute: () => AdminRoute,
 } as any).lazy(() =>
-  import('./app/routes/_admin/home.lazy').then((d) => d.Route),
-)
+  import("./app/routes/_admin/home.lazy").then((d) => d.Route)
+);
+
+const AdminHelloLazyRoute = AdminHelloLazyImport.update({
+  id: "/hello",
+  path: "/hello",
+  getParentRoute: () => AdminRoute,
+} as any).lazy(() =>
+  import("./app/routes/_admin/hello.lazy").then((d) => d.Route)
+);
 
 const AdminAnalyticsLazyRoute = AdminAnalyticsLazyImport.update({
-  id: '/analytics',
-  path: '/analytics',
+  id: "/analytics",
+  path: "/analytics",
   getParentRoute: () => AdminRoute,
 } as any).lazy(() =>
-  import('./app/routes/_admin/analytics.lazy').then((d) => d.Route),
-)
+  import("./app/routes/_admin/analytics.lazy").then((d) => d.Route)
+);
 
 const PublicSignUpRoute = PublicSignUpImport.update({
-  id: '/sign-up',
-  path: '/sign-up',
+  id: "/sign-up",
+  path: "/sign-up",
   getParentRoute: () => PublicRoute,
-} as any)
+} as any);
 
 const AdminFormsIndexLazyRoute = AdminFormsIndexLazyImport.update({
-  id: '/forms/',
-  path: '/forms/',
+  id: "/forms/",
+  path: "/forms/",
   getParentRoute: () => AdminRoute,
 } as any).lazy(() =>
-  import('./app/routes/_admin/forms/index.lazy').then((d) => d.Route),
-)
+  import("./app/routes/_admin/forms/index.lazy").then((d) => d.Route)
+);
 
 const AdminDmIndexLazyRoute = AdminDmIndexLazyImport.update({
-  id: '/dm/',
-  path: '/dm/',
+  id: "/dm/",
+  path: "/dm/",
   getParentRoute: () => AdminRoute,
 } as any).lazy(() =>
-  import('./app/routes/_admin/dm/index.lazy').then((d) => d.Route),
-)
+  import("./app/routes/_admin/dm/index.lazy").then((d) => d.Route)
+);
 
 const AdminDashboardIndexLazyRoute = AdminDashboardIndexLazyImport.update({
-  id: '/dashboard/',
-  path: '/dashboard/',
+  id: "/dashboard/",
+  path: "/dashboard/",
   getParentRoute: () => AdminRoute,
 } as any).lazy(() =>
-  import('./app/routes/_admin/dashboard/index.lazy').then((d) => d.Route),
-)
+  import("./app/routes/_admin/dashboard/index.lazy").then((d) => d.Route)
+);
 
 const AdminCalendarIndexLazyRoute = AdminCalendarIndexLazyImport.update({
-  id: '/calendar/',
-  path: '/calendar/',
+  id: "/calendar/",
+  path: "/calendar/",
   getParentRoute: () => AdminRoute,
 } as any).lazy(() =>
-  import('./app/routes/_admin/calendar/index.lazy').then((d) => d.Route),
-)
+  import("./app/routes/_admin/calendar/index.lazy").then((d) => d.Route)
+);
 
 const AdminBookingsIndexLazyRoute = AdminBookingsIndexLazyImport.update({
-  id: '/bookings/',
-  path: '/bookings/',
+  id: "/bookings/",
+  path: "/bookings/",
   getParentRoute: () => AdminRoute,
 } as any).lazy(() =>
-  import('./app/routes/_admin/bookings/index.lazy').then((d) => d.Route),
-)
+  import("./app/routes/_admin/bookings/index.lazy").then((d) => d.Route)
+);
 
 // Populate the FileRoutesByPath interface
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/_admin': {
-      id: '/_admin'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AdminImport
-      parentRoute: typeof rootRoute
-    }
-    '/_public': {
-      id: '/_public'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof PublicImport
-      parentRoute: typeof rootRoute
-    }
-    '/_public/sign-up': {
-      id: '/_public/sign-up'
-      path: '/sign-up'
-      fullPath: '/sign-up'
-      preLoaderRoute: typeof PublicSignUpImport
-      parentRoute: typeof PublicImport
-    }
-    '/_admin/analytics': {
-      id: '/_admin/analytics'
-      path: '/analytics'
-      fullPath: '/analytics'
-      preLoaderRoute: typeof AdminAnalyticsLazyImport
-      parentRoute: typeof AdminImport
-    }
-    '/_admin/home': {
-      id: '/_admin/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof AdminHomeLazyImport
-      parentRoute: typeof AdminImport
-    }
-    '/_admin/my-profile': {
-      id: '/_admin/my-profile'
-      path: '/my-profile'
-      fullPath: '/my-profile'
-      preLoaderRoute: typeof AdminMyProfileLazyImport
-      parentRoute: typeof AdminImport
-    }
-    '/_admin/settings': {
-      id: '/_admin/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AdminSettingsLazyImport
-      parentRoute: typeof AdminImport
-    }
-    '/_public/login': {
-      id: '/_public/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof PublicLoginLazyImport
-      parentRoute: typeof PublicImport
-    }
-    '/_admin/bookings/': {
-      id: '/_admin/bookings/'
-      path: '/bookings'
-      fullPath: '/bookings'
-      preLoaderRoute: typeof AdminBookingsIndexLazyImport
-      parentRoute: typeof AdminImport
-    }
-    '/_admin/calendar/': {
-      id: '/_admin/calendar/'
-      path: '/calendar'
-      fullPath: '/calendar'
-      preLoaderRoute: typeof AdminCalendarIndexLazyImport
-      parentRoute: typeof AdminImport
-    }
-    '/_admin/dashboard/': {
-      id: '/_admin/dashboard/'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AdminDashboardIndexLazyImport
-      parentRoute: typeof AdminImport
-    }
-    '/_admin/dm/': {
-      id: '/_admin/dm/'
-      path: '/dm'
-      fullPath: '/dm'
-      preLoaderRoute: typeof AdminDmIndexLazyImport
-      parentRoute: typeof AdminImport
-    }
-    '/_admin/forms/': {
-      id: '/_admin/forms/'
-      path: '/forms'
-      fullPath: '/forms'
-      preLoaderRoute: typeof AdminFormsIndexLazyImport
-      parentRoute: typeof AdminImport
-    }
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexLazyImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/_admin": {
+      id: "/_admin";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof AdminImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/_public": {
+      id: "/_public";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof PublicImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/_public/sign-up": {
+      id: "/_public/sign-up";
+      path: "/sign-up";
+      fullPath: "/sign-up";
+      preLoaderRoute: typeof PublicSignUpImport;
+      parentRoute: typeof PublicImport;
+    };
+    "/_admin/analytics": {
+      id: "/_admin/analytics";
+      path: "/analytics";
+      fullPath: "/analytics";
+      preLoaderRoute: typeof AdminAnalyticsLazyImport;
+      parentRoute: typeof AdminImport;
+    };
+    "/_admin/hello": {
+      id: "/_admin/hello";
+      path: "/hello";
+      fullPath: "/hello";
+      preLoaderRoute: typeof AdminHelloLazyImport;
+      parentRoute: typeof AdminImport;
+    };
+    "/_admin/home": {
+      id: "/_admin/home";
+      path: "/home";
+      fullPath: "/home";
+      preLoaderRoute: typeof AdminHomeLazyImport;
+      parentRoute: typeof AdminImport;
+    };
+    "/_admin/my-profile": {
+      id: "/_admin/my-profile";
+      path: "/my-profile";
+      fullPath: "/my-profile";
+      preLoaderRoute: typeof AdminMyProfileLazyImport;
+      parentRoute: typeof AdminImport;
+    };
+    "/_admin/settings": {
+      id: "/_admin/settings";
+      path: "/settings";
+      fullPath: "/settings";
+      preLoaderRoute: typeof AdminSettingsLazyImport;
+      parentRoute: typeof AdminImport;
+    };
+    "/_public/login": {
+      id: "/_public/login";
+      path: "/login";
+      fullPath: "/login";
+      preLoaderRoute: typeof PublicLoginLazyImport;
+      parentRoute: typeof PublicImport;
+    };
+    "/_admin/bookings/": {
+      id: "/_admin/bookings/";
+      path: "/bookings";
+      fullPath: "/bookings";
+      preLoaderRoute: typeof AdminBookingsIndexLazyImport;
+      parentRoute: typeof AdminImport;
+    };
+    "/_admin/calendar/": {
+      id: "/_admin/calendar/";
+      path: "/calendar";
+      fullPath: "/calendar";
+      preLoaderRoute: typeof AdminCalendarIndexLazyImport;
+      parentRoute: typeof AdminImport;
+    };
+    "/_admin/dashboard/": {
+      id: "/_admin/dashboard/";
+      path: "/dashboard";
+      fullPath: "/dashboard";
+      preLoaderRoute: typeof AdminDashboardIndexLazyImport;
+      parentRoute: typeof AdminImport;
+    };
+    "/_admin/dm/": {
+      id: "/_admin/dm/";
+      path: "/dm";
+      fullPath: "/dm";
+      preLoaderRoute: typeof AdminDmIndexLazyImport;
+      parentRoute: typeof AdminImport;
+    };
+    "/_admin/forms/": {
+      id: "/_admin/forms/";
+      path: "/forms";
+      fullPath: "/forms";
+      preLoaderRoute: typeof AdminFormsIndexLazyImport;
+      parentRoute: typeof AdminImport;
+    };
   }
 }
 
 // Create and export the route tree
 
 interface AdminRouteChildren {
-  AdminAnalyticsLazyRoute: typeof AdminAnalyticsLazyRoute
-  AdminHomeLazyRoute: typeof AdminHomeLazyRoute
-  AdminMyProfileLazyRoute: typeof AdminMyProfileLazyRoute
-  AdminSettingsLazyRoute: typeof AdminSettingsLazyRoute
-  AdminBookingsIndexLazyRoute: typeof AdminBookingsIndexLazyRoute
-  AdminCalendarIndexLazyRoute: typeof AdminCalendarIndexLazyRoute
-  AdminDashboardIndexLazyRoute: typeof AdminDashboardIndexLazyRoute
-  AdminDmIndexLazyRoute: typeof AdminDmIndexLazyRoute
-  AdminFormsIndexLazyRoute: typeof AdminFormsIndexLazyRoute
+  AdminAnalyticsLazyRoute: typeof AdminAnalyticsLazyRoute;
+  AdminHelloLazyRoute: typeof AdminHelloLazyRoute;
+  AdminHomeLazyRoute: typeof AdminHomeLazyRoute;
+  AdminMyProfileLazyRoute: typeof AdminMyProfileLazyRoute;
+  AdminSettingsLazyRoute: typeof AdminSettingsLazyRoute;
+  AdminBookingsIndexLazyRoute: typeof AdminBookingsIndexLazyRoute;
+  AdminCalendarIndexLazyRoute: typeof AdminCalendarIndexLazyRoute;
+  AdminDashboardIndexLazyRoute: typeof AdminDashboardIndexLazyRoute;
+  AdminDmIndexLazyRoute: typeof AdminDmIndexLazyRoute;
+  AdminFormsIndexLazyRoute: typeof AdminFormsIndexLazyRoute;
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAnalyticsLazyRoute: AdminAnalyticsLazyRoute,
+  AdminHelloLazyRoute: AdminHelloLazyRoute,
   AdminHomeLazyRoute: AdminHomeLazyRoute,
   AdminMyProfileLazyRoute: AdminMyProfileLazyRoute,
   AdminSettingsLazyRoute: AdminSettingsLazyRoute,
@@ -264,138 +282,144 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminDashboardIndexLazyRoute: AdminDashboardIndexLazyRoute,
   AdminDmIndexLazyRoute: AdminDmIndexLazyRoute,
   AdminFormsIndexLazyRoute: AdminFormsIndexLazyRoute,
-}
+};
 
-const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren);
 
 interface PublicRouteChildren {
-  PublicSignUpRoute: typeof PublicSignUpRoute
-  PublicLoginLazyRoute: typeof PublicLoginLazyRoute
+  PublicSignUpRoute: typeof PublicSignUpRoute;
+  PublicLoginLazyRoute: typeof PublicLoginLazyRoute;
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicSignUpRoute: PublicSignUpRoute,
   PublicLoginLazyRoute: PublicLoginLazyRoute,
-}
+};
 
 const PublicRouteWithChildren =
-  PublicRoute._addFileChildren(PublicRouteChildren)
+  PublicRoute._addFileChildren(PublicRouteChildren);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexLazyRoute
-  '': typeof PublicRouteWithChildren
-  '/sign-up': typeof PublicSignUpRoute
-  '/analytics': typeof AdminAnalyticsLazyRoute
-  '/home': typeof AdminHomeLazyRoute
-  '/my-profile': typeof AdminMyProfileLazyRoute
-  '/settings': typeof AdminSettingsLazyRoute
-  '/login': typeof PublicLoginLazyRoute
-  '/bookings': typeof AdminBookingsIndexLazyRoute
-  '/calendar': typeof AdminCalendarIndexLazyRoute
-  '/dashboard': typeof AdminDashboardIndexLazyRoute
-  '/dm': typeof AdminDmIndexLazyRoute
-  '/forms': typeof AdminFormsIndexLazyRoute
+  "/": typeof IndexLazyRoute;
+  "": typeof PublicRouteWithChildren;
+  "/sign-up": typeof PublicSignUpRoute;
+  "/analytics": typeof AdminAnalyticsLazyRoute;
+  "/hello": typeof AdminHelloLazyRoute;
+  "/home": typeof AdminHomeLazyRoute;
+  "/my-profile": typeof AdminMyProfileLazyRoute;
+  "/settings": typeof AdminSettingsLazyRoute;
+  "/login": typeof PublicLoginLazyRoute;
+  "/bookings": typeof AdminBookingsIndexLazyRoute;
+  "/calendar": typeof AdminCalendarIndexLazyRoute;
+  "/dashboard": typeof AdminDashboardIndexLazyRoute;
+  "/dm": typeof AdminDmIndexLazyRoute;
+  "/forms": typeof AdminFormsIndexLazyRoute;
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexLazyRoute
-  '': typeof PublicRouteWithChildren
-  '/sign-up': typeof PublicSignUpRoute
-  '/analytics': typeof AdminAnalyticsLazyRoute
-  '/home': typeof AdminHomeLazyRoute
-  '/my-profile': typeof AdminMyProfileLazyRoute
-  '/settings': typeof AdminSettingsLazyRoute
-  '/login': typeof PublicLoginLazyRoute
-  '/bookings': typeof AdminBookingsIndexLazyRoute
-  '/calendar': typeof AdminCalendarIndexLazyRoute
-  '/dashboard': typeof AdminDashboardIndexLazyRoute
-  '/dm': typeof AdminDmIndexLazyRoute
-  '/forms': typeof AdminFormsIndexLazyRoute
+  "/": typeof IndexLazyRoute;
+  "": typeof PublicRouteWithChildren;
+  "/sign-up": typeof PublicSignUpRoute;
+  "/analytics": typeof AdminAnalyticsLazyRoute;
+  "/hello": typeof AdminHelloLazyRoute;
+  "/home": typeof AdminHomeLazyRoute;
+  "/my-profile": typeof AdminMyProfileLazyRoute;
+  "/settings": typeof AdminSettingsLazyRoute;
+  "/login": typeof PublicLoginLazyRoute;
+  "/bookings": typeof AdminBookingsIndexLazyRoute;
+  "/calendar": typeof AdminCalendarIndexLazyRoute;
+  "/dashboard": typeof AdminDashboardIndexLazyRoute;
+  "/dm": typeof AdminDmIndexLazyRoute;
+  "/forms": typeof AdminFormsIndexLazyRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexLazyRoute
-  '/_admin': typeof AdminRouteWithChildren
-  '/_public': typeof PublicRouteWithChildren
-  '/_public/sign-up': typeof PublicSignUpRoute
-  '/_admin/analytics': typeof AdminAnalyticsLazyRoute
-  '/_admin/home': typeof AdminHomeLazyRoute
-  '/_admin/my-profile': typeof AdminMyProfileLazyRoute
-  '/_admin/settings': typeof AdminSettingsLazyRoute
-  '/_public/login': typeof PublicLoginLazyRoute
-  '/_admin/bookings/': typeof AdminBookingsIndexLazyRoute
-  '/_admin/calendar/': typeof AdminCalendarIndexLazyRoute
-  '/_admin/dashboard/': typeof AdminDashboardIndexLazyRoute
-  '/_admin/dm/': typeof AdminDmIndexLazyRoute
-  '/_admin/forms/': typeof AdminFormsIndexLazyRoute
+  __root__: typeof rootRoute;
+  "/": typeof IndexLazyRoute;
+  "/_admin": typeof AdminRouteWithChildren;
+  "/_public": typeof PublicRouteWithChildren;
+  "/_public/sign-up": typeof PublicSignUpRoute;
+  "/_admin/analytics": typeof AdminAnalyticsLazyRoute;
+  "/_admin/hello": typeof AdminHelloLazyRoute;
+  "/_admin/home": typeof AdminHomeLazyRoute;
+  "/_admin/my-profile": typeof AdminMyProfileLazyRoute;
+  "/_admin/settings": typeof AdminSettingsLazyRoute;
+  "/_public/login": typeof PublicLoginLazyRoute;
+  "/_admin/bookings/": typeof AdminBookingsIndexLazyRoute;
+  "/_admin/calendar/": typeof AdminCalendarIndexLazyRoute;
+  "/_admin/dashboard/": typeof AdminDashboardIndexLazyRoute;
+  "/_admin/dm/": typeof AdminDmIndexLazyRoute;
+  "/_admin/forms/": typeof AdminFormsIndexLazyRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/'
-    | ''
-    | '/sign-up'
-    | '/analytics'
-    | '/home'
-    | '/my-profile'
-    | '/settings'
-    | '/login'
-    | '/bookings'
-    | '/calendar'
-    | '/dashboard'
-    | '/dm'
-    | '/forms'
-  fileRoutesByTo: FileRoutesByTo
+    | "/"
+    | ""
+    | "/sign-up"
+    | "/analytics"
+    | "/hello"
+    | "/home"
+    | "/my-profile"
+    | "/settings"
+    | "/login"
+    | "/bookings"
+    | "/calendar"
+    | "/dashboard"
+    | "/dm"
+    | "/forms";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/'
-    | ''
-    | '/sign-up'
-    | '/analytics'
-    | '/home'
-    | '/my-profile'
-    | '/settings'
-    | '/login'
-    | '/bookings'
-    | '/calendar'
-    | '/dashboard'
-    | '/dm'
-    | '/forms'
+    | "/"
+    | ""
+    | "/sign-up"
+    | "/analytics"
+    | "/hello"
+    | "/home"
+    | "/my-profile"
+    | "/settings"
+    | "/login"
+    | "/bookings"
+    | "/calendar"
+    | "/dashboard"
+    | "/dm"
+    | "/forms";
   id:
-    | '__root__'
-    | '/'
-    | '/_admin'
-    | '/_public'
-    | '/_public/sign-up'
-    | '/_admin/analytics'
-    | '/_admin/home'
-    | '/_admin/my-profile'
-    | '/_admin/settings'
-    | '/_public/login'
-    | '/_admin/bookings/'
-    | '/_admin/calendar/'
-    | '/_admin/dashboard/'
-    | '/_admin/dm/'
-    | '/_admin/forms/'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/"
+    | "/_admin"
+    | "/_public"
+    | "/_public/sign-up"
+    | "/_admin/analytics"
+    | "/_admin/hello"
+    | "/_admin/home"
+    | "/_admin/my-profile"
+    | "/_admin/settings"
+    | "/_public/login"
+    | "/_admin/bookings/"
+    | "/_admin/calendar/"
+    | "/_admin/dashboard/"
+    | "/_admin/dm/"
+    | "/_admin/forms/";
+  fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  IndexLazyRoute: typeof IndexLazyRoute
-  AdminRoute: typeof AdminRouteWithChildren
-  PublicRoute: typeof PublicRouteWithChildren
+  IndexLazyRoute: typeof IndexLazyRoute;
+  AdminRoute: typeof AdminRouteWithChildren;
+  PublicRoute: typeof PublicRouteWithChildren;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AdminRoute: AdminRouteWithChildren,
   PublicRoute: PublicRouteWithChildren,
-}
+};
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
 /* ROUTE_MANIFEST_START
 {
@@ -415,6 +439,7 @@ export const routeTree = rootRoute
       "filePath": "_admin.tsx",
       "children": [
         "/_admin/analytics",
+        "/_admin/hello",
         "/_admin/home",
         "/_admin/my-profile",
         "/_admin/settings",
@@ -438,6 +463,10 @@ export const routeTree = rootRoute
     },
     "/_admin/analytics": {
       "filePath": "_admin/analytics.lazy.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/hello": {
+      "filePath": "_admin/hello.lazy.tsx",
       "parent": "/_admin"
     },
     "/_admin/home": {

@@ -1,9 +1,9 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from '@tanstack/react-router'
 
-export const Route = createLazyFileRoute("/_admin/settings")({
+export const Route = createLazyFileRoute('/_admin/settings')({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
-  return "Hello /_admin/settings!";
+  return 'Hello /_admin/settings!'
 }

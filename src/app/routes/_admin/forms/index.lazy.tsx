@@ -5,5 +5,6 @@ export const Route = createLazyFileRoute("/_admin/forms/")({
 });
 
 function RouteComponent() {
+  console.log("rendered");
   return "Hello /_admin/forms/!";
 }
