@@ -21,10 +21,10 @@ function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {...props}
       className="bg-sidebar-background text-sidebar-foreground"
     >
-      <SidebarHeader className="text-sidebar-primary-foreground p-6 pb-2">
+      <SidebarHeader className="text-sidebar-primary-foreground p-4 pl-6 border-b  ">
         <AppLogo />
       </SidebarHeader>
-      <SidebarContent className="list-none">
+      <SidebarContent className="list-none pt-4">
         {navigationItems.map((item) => {
           const isActive = pathName === item.url;
 

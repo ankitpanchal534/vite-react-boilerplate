@@ -14,5 +14,6 @@ export const navigationItems = [
   { title: "Forms", icon: GrDocumentPerformance, url: "/forms" },
   { title: "Analytics", icon: BarChart, url: "/analytics" },
   { title: "Calendar", icon: Calendar, url: "/calendar" },
+  { title: "Services", icon: User, url: "/services" },
   { title: "Profile", icon: User, url: "/my-profile" },
 ];
