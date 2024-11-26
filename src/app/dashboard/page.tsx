@@ -128,7 +128,7 @@ function DashboardPage() {
               paddingAngle={5}
               dataKey="value"
             >
-              {formResponseData.map((entry, index) => (
+              {formResponseData.map((_entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}

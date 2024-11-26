@@ -15,8 +15,10 @@ export default function SidebarComponent({
           Welcome
         </header> */}
         {/* <Separator orientation="vertical" className="mr-2 h-4" /> */}
-        <div className="flex flex-1 flex-col gap-4 p-4 bg-secondary min-h-min h-screen">
-          <div className="p-4 flex-1 bg-background rounded-2xl">{children}</div>
+        <div className="flex flex-1 flex-col gap-4 p-0  sm:p-2 md:p-4 bg-secondary min-h-min h-screen">
+          <div className="p-4 pt-8 sm:pt-4 flex-1 bg-background rounded-2xl">
+            {children}
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>
