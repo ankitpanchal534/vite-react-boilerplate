@@ -196,7 +196,7 @@ function BookingPage() {
     from: "/_public/d/$username/$serviceId/",
   });
 
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   const [selectedDate, setSelectedDate] = useState<dayjs.Dayjs | undefined>(
     dayjs()

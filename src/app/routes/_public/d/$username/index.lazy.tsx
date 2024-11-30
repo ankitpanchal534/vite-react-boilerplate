@@ -1,4 +1,8 @@
-import { useTheme } from "@/app/pages/_public/d/booking-page/CalenderTheme";
+import {
+  ThemeProvider,
+  ThemeSelector,
+  useTheme,
+} from "@/app/pages/_public/d/booking-page/CalenderTheme";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +23,7 @@ import {
 } from "lucide-react";
 
 function PublicProfilePage() {
-  const theme = useTheme();
+  const { theme } = useTheme();
   return (
     <div
       className="min-h-screen"
@@ -33,14 +37,19 @@ function PublicProfilePage() {
       <StatsSection />
       <ContactSection />
       <FloatingBookingButton />
+      <ThemeSelector />
     </div>
   );
 }
 export const Route = createLazyFileRoute("/_public/d/$username/")({
-  component: PublicProfilePage,
+  component: () => (
+    <ThemeProvider>
+      <PublicProfilePage />
+    </ThemeProvider>
+  ),
 });
 const HeroSection = () => {
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   return (
     <motion.section
@@ -106,7 +115,7 @@ const HeroSection = () => {
 };
 
 const ServicesSection = () => {
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   const services = [
     {
@@ -208,7 +217,7 @@ const ServiceCard = ({ service, index, theme }: any) => {
   );
 };
 const TestimonialsSection = () => {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const testimonials = [
     {
       id: 1,
@@ -292,7 +301,7 @@ const TestimonialCard = ({ testimonial, index }: any) => {
 };
 
 const StatsSection = () => {
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   const stats = [
     { label: "Clients Served", value: "500+", icon: Users },
@@ -307,7 +316,7 @@ const StatsSection = () => {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       className="py-20 text-white"
-      style={{ backgroundColor: theme.colors.primary.base }}
+      style={{ backgroundColor: theme.colors.primary.hover }}
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -332,7 +341,7 @@ const StatsSection = () => {
 };
 
 const ContactSection = () => {
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   return (
     <motion.section
@@ -392,7 +401,7 @@ const ContactSection = () => {
 };
 
 const FloatingBookingButton = () => {
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   return (
     <motion.div

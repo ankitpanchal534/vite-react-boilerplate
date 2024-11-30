@@ -132,5 +132,5 @@ const ModernLayout = () => (
   </div>
 );
 export const Route = createFileRoute("/_public/d/$username/")({
-  component: ModernLayout,
+  component: () => <h1>Hello</h1>,
 });

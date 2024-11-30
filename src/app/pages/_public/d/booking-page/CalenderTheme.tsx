@@ -1,37 +1,13 @@
-const theme = {
-  colors: {
-    primary: {
-      base: "#D5006D", // pink-600
-      gradient: {
-        from: "#D5006D", // pink-600
-        via: "#FF4081", // pink-500
-        to: "#FFABAB", // lightpink
-      },
-      hover: "rgba(213, 0, 109, 0.9)", // pink-600 with opacity
-      light: "#F8BBD0", // pink-50
-      border: "#F50057", // pink-500
-      text: "#C51162", // pink-700
-    },
-    secondary: {
-      border: "#F8BBD0", // lightpink
-      bg: "#FFEBEE", // pink-100
-    },
-    white: {
-      bg: "rgba(255, 255, 255, 0.9)",
-      border: "rgba(255, 255, 255, 0.5)",
-    },
-    gray: {
-      text: "#4B5563", // gray-600
-      bg: "#E5E7EB", // gray-200
-    },
-  },
-};
-export type TTheme = typeof theme;
+import { createContext, useContext, useState } from "react";
+import { all_themes } from "./sample-themes";
 
-import { createContext, useContext } from "react";
+export type TTheme = (typeof all_themes)[0];
 
 // Create theme context
-const ThemeContext = createContext(theme);
+const ThemeContext = createContext({
+  theme: all_themes[0],
+  setTheme: (theme: TTheme) => {},
+});
 
 // Custom hook to use theme
 export const useTheme = () => {
@@ -42,11 +18,47 @@ export const useTheme = () => {
   return context;
 };
 
-// Theme provider component
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+export const ThemeSelector = () => {
+  const { theme, setTheme } = useTheme();
   return (
-    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
+    <>
+      <div className="flex flex-col md:flex-row justify-center items-center gap-4 fixed bottom-0 left-0 right-0 bg-white p-4  ">
+        {Object.keys(all_themes).map((_theme, index) => (
+          <div
+            key={index}
+            className={`w-6 h-6 rounded-full cursor-pointer ${
+              theme.id === index + 1 ? "border-2 border-blue-500" : ""
+            }`}
+            onClick={() => setTheme(all_themes[index])}
+          >
+            <div
+              className="w-full h-full rounded-full text-xl"
+              style={{
+                background: `linear-gradient(to right, ${all_themes[index].colors.primary.gradient.from}, ${all_themes[index].colors.primary.gradient.to})`,
+              }}
+            ></div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
-export default theme;
+// Theme provider component
+export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+  const [theme, setThemed] = useState(all_themes[0]);
+  const setTheme = (theme1: TTheme) => {
+    console.log("theme1", theme1);
+    setThemed(theme1);
+  };
+  return (
+    <ThemeContext.Provider
+      value={{
+        theme,
+        setTheme,
+      }}
+    >
+      {children}
+    </ThemeContext.Provider>
+  );
+};

@@ -16,7 +16,6 @@ import { Route as rootRoute } from './app/routes/__root'
 import { Route as PublicImport } from './app/routes/_public'
 import { Route as AdminImport } from './app/routes/_admin'
 import { Route as PublicSignUpImport } from './app/routes/_public/sign-up'
-import { Route as PublicDImport } from './app/routes/_public/_d'
 import { Route as AdminDmIndexImport } from './app/routes/_admin/dm/index'
 import { Route as PublicDUsernameIndexImport } from './app/routes/_public/d/$username/index'
 
@@ -115,11 +114,6 @@ const AdminAnalyticsLazyRoute = AdminAnalyticsLazyImport.update({
 const PublicSignUpRoute = PublicSignUpImport.update({
   id: '/sign-up',
   path: '/sign-up',
-  getParentRoute: () => PublicRoute,
-} as any)
-
-const PublicDRoute = PublicDImport.update({
-  id: '/_d',
   getParentRoute: () => PublicRoute,
 } as any)
 
@@ -246,13 +240,6 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof PublicImport
       parentRoute: typeof rootRoute
-    }
-    '/_public/_d': {
-      id: '/_public/_d'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof PublicDImport
-      parentRoute: typeof PublicImport
     }
     '/_public/sign-up': {
       id: '/_public/sign-up'
@@ -431,7 +418,6 @@ const AdminRouteChildren: AdminRouteChildren = {
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface PublicRouteChildren {
-  PublicDRoute: typeof PublicDRoute
   PublicSignUpRoute: typeof PublicSignUpRoute
   PublicLoginLazyRoute: typeof PublicLoginLazyRoute
   PublicDUsernameIndexRoute: typeof PublicDUsernameIndexRoute
@@ -439,7 +425,6 @@ interface PublicRouteChildren {
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
-  PublicDRoute: PublicDRoute,
   PublicSignUpRoute: PublicSignUpRoute,
   PublicLoginLazyRoute: PublicLoginLazyRoute,
   PublicDUsernameIndexRoute: PublicDUsernameIndexRoute,
@@ -452,7 +437,7 @@ const PublicRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
-  '': typeof PublicDRoute
+  '': typeof PublicRouteWithChildren
   '/sign-up': typeof PublicSignUpRoute
   '/analytics': typeof AdminAnalyticsLazyRoute
   '/hello': typeof AdminHelloLazyRoute
@@ -476,7 +461,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
-  '': typeof PublicDRoute
+  '': typeof PublicRouteWithChildren
   '/sign-up': typeof PublicSignUpRoute
   '/analytics': typeof AdminAnalyticsLazyRoute
   '/hello': typeof AdminHelloLazyRoute
@@ -503,7 +488,6 @@ export interface FileRoutesById {
   '/': typeof IndexLazyRoute
   '/_admin': typeof AdminRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
-  '/_public/_d': typeof PublicDRoute
   '/_public/sign-up': typeof PublicSignUpRoute
   '/_admin/analytics': typeof AdminAnalyticsLazyRoute
   '/_admin/hello': typeof AdminHelloLazyRoute
@@ -577,7 +561,6 @@ export interface FileRouteTypes {
     | '/'
     | '/_admin'
     | '/_public'
-    | '/_public/_d'
     | '/_public/sign-up'
     | '/_admin/analytics'
     | '/_admin/hello'
@@ -653,16 +636,11 @@ export const routeTree = rootRoute
     "/_public": {
       "filePath": "_public.tsx",
       "children": [
-        "/_public/_d",
         "/_public/sign-up",
         "/_public/login",
         "/_public/d/$username/",
         "/_public/d/$username/$serviceId/"
       ]
-    },
-    "/_public/_d": {
-      "filePath": "_public/_d.tsx",
-      "parent": "/_public"
     },
     "/_public/sign-up": {
       "filePath": "_public/sign-up.tsx",
