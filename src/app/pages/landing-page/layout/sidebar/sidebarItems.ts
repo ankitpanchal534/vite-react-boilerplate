@@ -14,7 +14,8 @@ export const navigationItems = [
   { title: "Priority DM", icon: MessageCircleIcon, url: "/dm" },
   { title: "Forms", icon: GrDocumentPerformance, url: "/forms" },
   { title: "Analytics", icon: BarChart, url: "/analytics" },
-  { title: "Calendar", icon: Calendar, url: "/calendar" },
+  // { title: "Calendar", icon: Calendar, url: "/calendar" },
+  { title: "Availability", icon: Calendar, url: "/availability" },
   { title: "Services", icon: FcServices, url: "/services" },
   { title: "Profile", icon: User, url: "/my-profile" },
 ];

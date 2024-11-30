@@ -2,6 +2,7 @@ import { usePathname } from "@/hooks/router";
 import { Link } from "@tanstack/react-router";
 import { FC, useRef } from "react";
 import { navigationItems } from "./sidebarItems";
+import { cn } from "@/lib/utils";
 
 const Sidebar: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -22,7 +23,9 @@ const Sidebar: FC = () => {
               <Link
                 to={item.url}
                 key={i}
-                className={`p-2 rounded-lg transition-colors duration-200 ${isActive ? "bg-sidebar-primary text-sidebar-primary-foreground" : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"}`}
+                className={cn(
+                  `p-2 rounded-lg transition-colors duration-200  ${isActive ? "bg-sidebar-primary text-sidebar-primary-foreground" : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"}`
+                )}
               >
                 {item.title}
               </Link>

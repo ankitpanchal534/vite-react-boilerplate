@@ -16,6 +16,9 @@ import { Route as rootRoute } from './app/routes/__root'
 import { Route as PublicImport } from './app/routes/_public'
 import { Route as AdminImport } from './app/routes/_admin'
 import { Route as PublicSignUpImport } from './app/routes/_public/sign-up'
+import { Route as PublicDImport } from './app/routes/_public/_d'
+import { Route as AdminDmIndexImport } from './app/routes/_admin/dm/index'
+import { Route as PublicDUsernameIndexImport } from './app/routes/_public/d/$username/index'
 
 // Create Virtual Routes
 
@@ -28,11 +31,20 @@ const AdminHelloLazyImport = createFileRoute('/_admin/hello')()
 const AdminAnalyticsLazyImport = createFileRoute('/_admin/analytics')()
 const AdminServicesIndexLazyImport = createFileRoute('/_admin/services/')()
 const AdminFormsIndexLazyImport = createFileRoute('/_admin/forms/')()
-const AdminDmIndexLazyImport = createFileRoute('/_admin/dm/')()
 const AdminDashboardIndexLazyImport = createFileRoute('/_admin/dashboard/')()
 const AdminCalendarIndexLazyImport = createFileRoute('/_admin/calendar/')()
 const AdminBookingsIndexLazyImport = createFileRoute('/_admin/bookings/')()
+const AdminAvailabilityIndexLazyImport = createFileRoute(
+  '/_admin/availability/',
+)()
 const AdminServicesAddLazyImport = createFileRoute('/_admin/services/add')()
+const AdminFormsNewLazyImport = createFileRoute('/_admin/forms/new')()
+const AdminFormsFormIdIndexLazyImport = createFileRoute(
+  '/_admin/forms/$formId/',
+)()
+const PublicDUsernameServiceIdIndexLazyImport = createFileRoute(
+  '/_public/d/$username/$serviceId/',
+)()
 
 // Create/Update Routes
 
@@ -106,6 +118,11 @@ const PublicSignUpRoute = PublicSignUpImport.update({
   getParentRoute: () => PublicRoute,
 } as any)
 
+const PublicDRoute = PublicDImport.update({
+  id: '/_d',
+  getParentRoute: () => PublicRoute,
+} as any)
+
 const AdminServicesIndexLazyRoute = AdminServicesIndexLazyImport.update({
   id: '/services/',
   path: '/services/',
@@ -120,14 +137,6 @@ const AdminFormsIndexLazyRoute = AdminFormsIndexLazyImport.update({
   getParentRoute: () => AdminRoute,
 } as any).lazy(() =>
   import('./app/routes/_admin/forms/index.lazy').then((d) => d.Route),
-)
-
-const AdminDmIndexLazyRoute = AdminDmIndexLazyImport.update({
-  id: '/dm/',
-  path: '/dm/',
-  getParentRoute: () => AdminRoute,
-} as any).lazy(() =>
-  import('./app/routes/_admin/dm/index.lazy').then((d) => d.Route),
 )
 
 const AdminDashboardIndexLazyRoute = AdminDashboardIndexLazyImport.update({
@@ -154,6 +163,22 @@ const AdminBookingsIndexLazyRoute = AdminBookingsIndexLazyImport.update({
   import('./app/routes/_admin/bookings/index.lazy').then((d) => d.Route),
 )
 
+const AdminAvailabilityIndexLazyRoute = AdminAvailabilityIndexLazyImport.update(
+  {
+    id: '/availability/',
+    path: '/availability/',
+    getParentRoute: () => AdminRoute,
+  } as any,
+).lazy(() =>
+  import('./app/routes/_admin/availability/index.lazy').then((d) => d.Route),
+)
+
+const AdminDmIndexRoute = AdminDmIndexImport.update({
+  id: '/dm/',
+  path: '/dm/',
+  getParentRoute: () => AdminRoute,
+} as any)
+
 const AdminServicesAddLazyRoute = AdminServicesAddLazyImport.update({
   id: '/services/add',
   path: '/services/add',
@@ -161,6 +186,41 @@ const AdminServicesAddLazyRoute = AdminServicesAddLazyImport.update({
 } as any).lazy(() =>
   import('./app/routes/_admin/services/add.lazy').then((d) => d.Route),
 )
+
+const AdminFormsNewLazyRoute = AdminFormsNewLazyImport.update({
+  id: '/forms/new',
+  path: '/forms/new',
+  getParentRoute: () => AdminRoute,
+} as any).lazy(() =>
+  import('./app/routes/_admin/forms/new.lazy').then((d) => d.Route),
+)
+
+const AdminFormsFormIdIndexLazyRoute = AdminFormsFormIdIndexLazyImport.update({
+  id: '/forms/$formId/',
+  path: '/forms/$formId/',
+  getParentRoute: () => AdminRoute,
+} as any).lazy(() =>
+  import('./app/routes/_admin/forms/$formId/index.lazy').then((d) => d.Route),
+)
+
+const PublicDUsernameIndexRoute = PublicDUsernameIndexImport.update({
+  id: '/d/$username/',
+  path: '/d/$username/',
+  getParentRoute: () => PublicRoute,
+} as any).lazy(() =>
+  import('./app/routes/_public/d/$username/index.lazy').then((d) => d.Route),
+)
+
+const PublicDUsernameServiceIdIndexLazyRoute =
+  PublicDUsernameServiceIdIndexLazyImport.update({
+    id: '/d/$username/$serviceId/',
+    path: '/d/$username/$serviceId/',
+    getParentRoute: () => PublicRoute,
+  } as any).lazy(() =>
+    import('./app/routes/_public/d/$username/$serviceId/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 
 // Populate the FileRoutesByPath interface
 
@@ -186,6 +246,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof PublicImport
       parentRoute: typeof rootRoute
+    }
+    '/_public/_d': {
+      id: '/_public/_d'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PublicDImport
+      parentRoute: typeof PublicImport
     }
     '/_public/sign-up': {
       id: '/_public/sign-up'
@@ -236,11 +303,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicLoginLazyImport
       parentRoute: typeof PublicImport
     }
+    '/_admin/forms/new': {
+      id: '/_admin/forms/new'
+      path: '/forms/new'
+      fullPath: '/forms/new'
+      preLoaderRoute: typeof AdminFormsNewLazyImport
+      parentRoute: typeof AdminImport
+    }
     '/_admin/services/add': {
       id: '/_admin/services/add'
       path: '/services/add'
       fullPath: '/services/add'
       preLoaderRoute: typeof AdminServicesAddLazyImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/dm/': {
+      id: '/_admin/dm/'
+      path: '/dm'
+      fullPath: '/dm'
+      preLoaderRoute: typeof AdminDmIndexImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/availability/': {
+      id: '/_admin/availability/'
+      path: '/availability'
+      fullPath: '/availability'
+      preLoaderRoute: typeof AdminAvailabilityIndexLazyImport
       parentRoute: typeof AdminImport
     }
     '/_admin/bookings/': {
@@ -264,13 +352,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardIndexLazyImport
       parentRoute: typeof AdminImport
     }
-    '/_admin/dm/': {
-      id: '/_admin/dm/'
-      path: '/dm'
-      fullPath: '/dm'
-      preLoaderRoute: typeof AdminDmIndexLazyImport
-      parentRoute: typeof AdminImport
-    }
     '/_admin/forms/': {
       id: '/_admin/forms/'
       path: '/forms'
@@ -285,6 +366,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminServicesIndexLazyImport
       parentRoute: typeof AdminImport
     }
+    '/_public/d/$username/': {
+      id: '/_public/d/$username/'
+      path: '/d/$username'
+      fullPath: '/d/$username'
+      preLoaderRoute: typeof PublicDUsernameIndexImport
+      parentRoute: typeof PublicImport
+    }
+    '/_admin/forms/$formId/': {
+      id: '/_admin/forms/$formId/'
+      path: '/forms/$formId'
+      fullPath: '/forms/$formId'
+      preLoaderRoute: typeof AdminFormsFormIdIndexLazyImport
+      parentRoute: typeof AdminImport
+    }
+    '/_public/d/$username/$serviceId/': {
+      id: '/_public/d/$username/$serviceId/'
+      path: '/d/$username/$serviceId'
+      fullPath: '/d/$username/$serviceId'
+      preLoaderRoute: typeof PublicDUsernameServiceIdIndexLazyImport
+      parentRoute: typeof PublicImport
+    }
   }
 }
 
@@ -296,13 +398,16 @@ interface AdminRouteChildren {
   AdminHomeLazyRoute: typeof AdminHomeLazyRoute
   AdminMyProfileLazyRoute: typeof AdminMyProfileLazyRoute
   AdminSettingsLazyRoute: typeof AdminSettingsLazyRoute
+  AdminFormsNewLazyRoute: typeof AdminFormsNewLazyRoute
   AdminServicesAddLazyRoute: typeof AdminServicesAddLazyRoute
+  AdminDmIndexRoute: typeof AdminDmIndexRoute
+  AdminAvailabilityIndexLazyRoute: typeof AdminAvailabilityIndexLazyRoute
   AdminBookingsIndexLazyRoute: typeof AdminBookingsIndexLazyRoute
   AdminCalendarIndexLazyRoute: typeof AdminCalendarIndexLazyRoute
   AdminDashboardIndexLazyRoute: typeof AdminDashboardIndexLazyRoute
-  AdminDmIndexLazyRoute: typeof AdminDmIndexLazyRoute
   AdminFormsIndexLazyRoute: typeof AdminFormsIndexLazyRoute
   AdminServicesIndexLazyRoute: typeof AdminServicesIndexLazyRoute
+  AdminFormsFormIdIndexLazyRoute: typeof AdminFormsFormIdIndexLazyRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -311,25 +416,35 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminHomeLazyRoute: AdminHomeLazyRoute,
   AdminMyProfileLazyRoute: AdminMyProfileLazyRoute,
   AdminSettingsLazyRoute: AdminSettingsLazyRoute,
+  AdminFormsNewLazyRoute: AdminFormsNewLazyRoute,
   AdminServicesAddLazyRoute: AdminServicesAddLazyRoute,
+  AdminDmIndexRoute: AdminDmIndexRoute,
+  AdminAvailabilityIndexLazyRoute: AdminAvailabilityIndexLazyRoute,
   AdminBookingsIndexLazyRoute: AdminBookingsIndexLazyRoute,
   AdminCalendarIndexLazyRoute: AdminCalendarIndexLazyRoute,
   AdminDashboardIndexLazyRoute: AdminDashboardIndexLazyRoute,
-  AdminDmIndexLazyRoute: AdminDmIndexLazyRoute,
   AdminFormsIndexLazyRoute: AdminFormsIndexLazyRoute,
   AdminServicesIndexLazyRoute: AdminServicesIndexLazyRoute,
+  AdminFormsFormIdIndexLazyRoute: AdminFormsFormIdIndexLazyRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface PublicRouteChildren {
+  PublicDRoute: typeof PublicDRoute
   PublicSignUpRoute: typeof PublicSignUpRoute
   PublicLoginLazyRoute: typeof PublicLoginLazyRoute
+  PublicDUsernameIndexRoute: typeof PublicDUsernameIndexRoute
+  PublicDUsernameServiceIdIndexLazyRoute: typeof PublicDUsernameServiceIdIndexLazyRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
+  PublicDRoute: PublicDRoute,
   PublicSignUpRoute: PublicSignUpRoute,
   PublicLoginLazyRoute: PublicLoginLazyRoute,
+  PublicDUsernameIndexRoute: PublicDUsernameIndexRoute,
+  PublicDUsernameServiceIdIndexLazyRoute:
+    PublicDUsernameServiceIdIndexLazyRoute,
 }
 
 const PublicRouteWithChildren =
@@ -337,7 +452,7 @@ const PublicRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
-  '': typeof PublicRouteWithChildren
+  '': typeof PublicDRoute
   '/sign-up': typeof PublicSignUpRoute
   '/analytics': typeof AdminAnalyticsLazyRoute
   '/hello': typeof AdminHelloLazyRoute
@@ -345,18 +460,23 @@ export interface FileRoutesByFullPath {
   '/my-profile': typeof AdminMyProfileLazyRoute
   '/settings': typeof AdminSettingsLazyRoute
   '/login': typeof PublicLoginLazyRoute
+  '/forms/new': typeof AdminFormsNewLazyRoute
   '/services/add': typeof AdminServicesAddLazyRoute
+  '/dm': typeof AdminDmIndexRoute
+  '/availability': typeof AdminAvailabilityIndexLazyRoute
   '/bookings': typeof AdminBookingsIndexLazyRoute
   '/calendar': typeof AdminCalendarIndexLazyRoute
   '/dashboard': typeof AdminDashboardIndexLazyRoute
-  '/dm': typeof AdminDmIndexLazyRoute
   '/forms': typeof AdminFormsIndexLazyRoute
   '/services': typeof AdminServicesIndexLazyRoute
+  '/d/$username': typeof PublicDUsernameIndexRoute
+  '/forms/$formId': typeof AdminFormsFormIdIndexLazyRoute
+  '/d/$username/$serviceId': typeof PublicDUsernameServiceIdIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
-  '': typeof PublicRouteWithChildren
+  '': typeof PublicDRoute
   '/sign-up': typeof PublicSignUpRoute
   '/analytics': typeof AdminAnalyticsLazyRoute
   '/hello': typeof AdminHelloLazyRoute
@@ -364,13 +484,18 @@ export interface FileRoutesByTo {
   '/my-profile': typeof AdminMyProfileLazyRoute
   '/settings': typeof AdminSettingsLazyRoute
   '/login': typeof PublicLoginLazyRoute
+  '/forms/new': typeof AdminFormsNewLazyRoute
   '/services/add': typeof AdminServicesAddLazyRoute
+  '/dm': typeof AdminDmIndexRoute
+  '/availability': typeof AdminAvailabilityIndexLazyRoute
   '/bookings': typeof AdminBookingsIndexLazyRoute
   '/calendar': typeof AdminCalendarIndexLazyRoute
   '/dashboard': typeof AdminDashboardIndexLazyRoute
-  '/dm': typeof AdminDmIndexLazyRoute
   '/forms': typeof AdminFormsIndexLazyRoute
   '/services': typeof AdminServicesIndexLazyRoute
+  '/d/$username': typeof PublicDUsernameIndexRoute
+  '/forms/$formId': typeof AdminFormsFormIdIndexLazyRoute
+  '/d/$username/$serviceId': typeof PublicDUsernameServiceIdIndexLazyRoute
 }
 
 export interface FileRoutesById {
@@ -378,6 +503,7 @@ export interface FileRoutesById {
   '/': typeof IndexLazyRoute
   '/_admin': typeof AdminRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
+  '/_public/_d': typeof PublicDRoute
   '/_public/sign-up': typeof PublicSignUpRoute
   '/_admin/analytics': typeof AdminAnalyticsLazyRoute
   '/_admin/hello': typeof AdminHelloLazyRoute
@@ -385,13 +511,18 @@ export interface FileRoutesById {
   '/_admin/my-profile': typeof AdminMyProfileLazyRoute
   '/_admin/settings': typeof AdminSettingsLazyRoute
   '/_public/login': typeof PublicLoginLazyRoute
+  '/_admin/forms/new': typeof AdminFormsNewLazyRoute
   '/_admin/services/add': typeof AdminServicesAddLazyRoute
+  '/_admin/dm/': typeof AdminDmIndexRoute
+  '/_admin/availability/': typeof AdminAvailabilityIndexLazyRoute
   '/_admin/bookings/': typeof AdminBookingsIndexLazyRoute
   '/_admin/calendar/': typeof AdminCalendarIndexLazyRoute
   '/_admin/dashboard/': typeof AdminDashboardIndexLazyRoute
-  '/_admin/dm/': typeof AdminDmIndexLazyRoute
   '/_admin/forms/': typeof AdminFormsIndexLazyRoute
   '/_admin/services/': typeof AdminServicesIndexLazyRoute
+  '/_public/d/$username/': typeof PublicDUsernameIndexRoute
+  '/_admin/forms/$formId/': typeof AdminFormsFormIdIndexLazyRoute
+  '/_public/d/$username/$serviceId/': typeof PublicDUsernameServiceIdIndexLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -406,13 +537,18 @@ export interface FileRouteTypes {
     | '/my-profile'
     | '/settings'
     | '/login'
+    | '/forms/new'
     | '/services/add'
+    | '/dm'
+    | '/availability'
     | '/bookings'
     | '/calendar'
     | '/dashboard'
-    | '/dm'
     | '/forms'
     | '/services'
+    | '/d/$username'
+    | '/forms/$formId'
+    | '/d/$username/$serviceId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -424,18 +560,24 @@ export interface FileRouteTypes {
     | '/my-profile'
     | '/settings'
     | '/login'
+    | '/forms/new'
     | '/services/add'
+    | '/dm'
+    | '/availability'
     | '/bookings'
     | '/calendar'
     | '/dashboard'
-    | '/dm'
     | '/forms'
     | '/services'
+    | '/d/$username'
+    | '/forms/$formId'
+    | '/d/$username/$serviceId'
   id:
     | '__root__'
     | '/'
     | '/_admin'
     | '/_public'
+    | '/_public/_d'
     | '/_public/sign-up'
     | '/_admin/analytics'
     | '/_admin/hello'
@@ -443,13 +585,18 @@ export interface FileRouteTypes {
     | '/_admin/my-profile'
     | '/_admin/settings'
     | '/_public/login'
+    | '/_admin/forms/new'
     | '/_admin/services/add'
+    | '/_admin/dm/'
+    | '/_admin/availability/'
     | '/_admin/bookings/'
     | '/_admin/calendar/'
     | '/_admin/dashboard/'
-    | '/_admin/dm/'
     | '/_admin/forms/'
     | '/_admin/services/'
+    | '/_public/d/$username/'
+    | '/_admin/forms/$formId/'
+    | '/_public/d/$username/$serviceId/'
   fileRoutesById: FileRoutesById
 }
 
@@ -491,21 +638,31 @@ export const routeTree = rootRoute
         "/_admin/home",
         "/_admin/my-profile",
         "/_admin/settings",
+        "/_admin/forms/new",
         "/_admin/services/add",
+        "/_admin/dm/",
+        "/_admin/availability/",
         "/_admin/bookings/",
         "/_admin/calendar/",
         "/_admin/dashboard/",
-        "/_admin/dm/",
         "/_admin/forms/",
-        "/_admin/services/"
+        "/_admin/services/",
+        "/_admin/forms/$formId/"
       ]
     },
     "/_public": {
       "filePath": "_public.tsx",
       "children": [
+        "/_public/_d",
         "/_public/sign-up",
-        "/_public/login"
+        "/_public/login",
+        "/_public/d/$username/",
+        "/_public/d/$username/$serviceId/"
       ]
+    },
+    "/_public/_d": {
+      "filePath": "_public/_d.tsx",
+      "parent": "/_public"
     },
     "/_public/sign-up": {
       "filePath": "_public/sign-up.tsx",
@@ -535,8 +692,20 @@ export const routeTree = rootRoute
       "filePath": "_public/login.lazy.tsx",
       "parent": "/_public"
     },
+    "/_admin/forms/new": {
+      "filePath": "_admin/forms/new.lazy.tsx",
+      "parent": "/_admin"
+    },
     "/_admin/services/add": {
       "filePath": "_admin/services/add.lazy.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/dm/": {
+      "filePath": "_admin/dm/index.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/availability/": {
+      "filePath": "_admin/availability/index.lazy.tsx",
       "parent": "/_admin"
     },
     "/_admin/bookings/": {
@@ -551,10 +720,6 @@ export const routeTree = rootRoute
       "filePath": "_admin/dashboard/index.lazy.tsx",
       "parent": "/_admin"
     },
-    "/_admin/dm/": {
-      "filePath": "_admin/dm/index.lazy.tsx",
-      "parent": "/_admin"
-    },
     "/_admin/forms/": {
       "filePath": "_admin/forms/index.lazy.tsx",
       "parent": "/_admin"
@@ -562,6 +727,18 @@ export const routeTree = rootRoute
     "/_admin/services/": {
       "filePath": "_admin/services/index.lazy.tsx",
       "parent": "/_admin"
+    },
+    "/_public/d/$username/": {
+      "filePath": "_public/d/$username/index.tsx",
+      "parent": "/_public"
+    },
+    "/_admin/forms/$formId/": {
+      "filePath": "_admin/forms/$formId/index.lazy.tsx",
+      "parent": "/_admin"
+    },
+    "/_public/d/$username/$serviceId/": {
+      "filePath": "_public/d/$username/$serviceId/index.lazy.tsx",
+      "parent": "/_public"
     }
   }
 }

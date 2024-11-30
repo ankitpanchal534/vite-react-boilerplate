@@ -1,5 +1,6 @@
 import { __fake_meetings } from "@/app/__mock_data__/__meetings__";
 import { BookingDetails } from "@/components/bookings/booking-details";
+import { Button } from "@/components/ui/button";
 import { ResponsivePanel } from "@/components/ui/responsive-panel";
 import { ResponsiveTable } from "@/components/ui/responsive-table";
 import { createLazyFileRoute } from "@tanstack/react-router";
@@ -110,6 +111,7 @@ function BookingsPage() {
                 Track and manage your service bookings
               </p>
             </div>
+            <Button>Add Booking</Button>
           </motion.div>
 
           {/* Stats Overview */}

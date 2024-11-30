@@ -4,9 +4,10 @@ import { cn } from "@/lib/utils";
 
 interface Iinput extends React.ComponentProps<"input"> {
   error?: string;
+  label?: string;
 }
 const Input = React.forwardRef<HTMLInputElement, Iinput>(
-  ({ className, type, error, ...props }, ref) => {
+  ({ className, type, error, label, ...props }, ref) => {
     return (
       <div className="flex flex-col">
         <input
